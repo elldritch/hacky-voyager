@@ -6,16 +6,16 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "q": "*",
+
     "express": "*",
     "jade": "*",
     "stylus": "*",
-    "socket.io": "*",
 
-    "everyauth": "*",
     "mongoose": "*",
 
-    "fbgraph": "*",
-
-    "moment": "*"
+    "googlemaps": "*",
+    "restler": "*",
+    "request": "*"
   }
 }

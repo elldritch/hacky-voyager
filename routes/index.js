@@ -56,7 +56,8 @@ module.exports = {
           voyage.current_user = user;
         }
       });
-      res.render('voyage', result[0]);
+      voyage.uri = req.headers.host;
+      res.render('voyage', voyage);
     });
   },
   invite: function(req, res, next){
