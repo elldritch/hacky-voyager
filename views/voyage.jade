@@ -21,7 +21,7 @@ block content
           a(href='/#{locals.token}/#{locals.current_user.token}') http://#{locals.uri}/#{locals.token}/#{locals.current_user.token}
     .row
       .large-6.columns
-        h4 You
+        h4 Your Information
         form(method='post', action='/#{locals.token}/#{locals.current_user.token}/save')
           if locals.current_user.name
             input(type='text', name='name', value='#{locals.current_user.name}', placeholder='Your Name', autocomplete="off")
@@ -39,7 +39,7 @@ block content
                 input(type='checkbox', name='driving', autocomplete="off") 
             .small-7.columns
               label(for='driving') Driving?
-          button.save Save
+          button.save Save Changes
           .row.save-alerts
         h4 Who else is coming?
         table
