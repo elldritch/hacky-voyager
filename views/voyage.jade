@@ -41,7 +41,7 @@ block content
               th Driving?
           tbody
             each user in locals.users
-              if user.name
+              if user.name && user._id != locals.current_user._id
                 tr
                   td #{user.name}
                   td #{user.location}

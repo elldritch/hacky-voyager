@@ -58,7 +58,6 @@ module.exports = {
       // console.log(end, result, result.destination, result.name);
       voyage.users.forEach(function(user, index, array){
         if(user.token == req.params.userid){
-          array.splice(index, 1);
           voyage.current_user = user;
         }
 
@@ -77,6 +76,8 @@ module.exports = {
       if(drivers.length > 0 && moochers.length > 0){
         return router.get_groups(drivers, moochers, end, function(err, groups){
           voyage.routing = JSON.stringify(groups);
+
+          console.log(groups, voyage.routing);
 
           var directions = [];
           groups.forEach(function(group){
