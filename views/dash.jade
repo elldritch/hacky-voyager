@@ -1,0 +1,23 @@
+extends layout
+
+block scripts
+  script(src='/javascripts/mootools.js')
+  script(src='/socket.io/socket.io.js')
+  script(src='/javascripts/dash.js')
+
+block content
+  .row
+    .large-12.columns
+      h1 Welcome to RideSpot
+  .row
+    .large-4.columns
+      h4 Your Events
+      if locals.upcoming.length > 0
+        ul.side-nav
+          each event in locals.upcoming
+            li
+              a(data-click='event', data-id='#{event.id}') #{event.name}
+      else
+        p No upcoming events!
+    .large-8.columns
+      h4 Choose an event from the left.
