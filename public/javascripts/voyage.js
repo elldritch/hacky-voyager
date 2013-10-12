@@ -99,4 +99,45 @@
     display: -1,
     alwaysHide: true
   });
+
+  var save_alert = function(message, succeeded){
+    var class_name = succeeded? 'alert-box success':'alert-box alert';
+    var alert = new Element('div', {
+      class: class_name,
+      text: message
+    });
+    var close = new Element('a', {
+      class: 'close',
+      href: '#',
+      html: '&times;'
+    });
+
+    close.addEvent('click', function(e){
+      e.preventDefault();
+      alert.destroy();
+    });
+
+    alert.grab(close);
+    return alert;
+  };
+
+  $$('.save')[0].addEvent('click', function(e){
+    e.preventDefault();
+    new Request({
+      url: uri.get('directory') + uri.get('file') + '/save',
+      data: {
+        name: $$('input[name="name"]')[0].value,
+        location: $$('input[name="location"]')[0].value,
+        driving: $$('input[name="driving"')[0].value
+      },
+      onSuccess: function(res){
+        $$('.save-alerts').set('html', '');
+        $$('.save-alerts').grab(save_alert(res, true));
+      },
+      onFailure: function(res){
+        $$('.save-alerts').set('html', '');
+        $$('.save-alerts').grab(save_alert(res.responseText, false));
+      }
+    }).send();
+  });
 })();

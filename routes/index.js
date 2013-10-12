@@ -1,7 +1,9 @@
 var Voyage = require('../models')
   , router = require('../lib/router')
 
-  , crypto = require('crypto');
+  , crypto = require('crypto')
+
+  , gm = require('googlemaps');
 
 var get_token = function(callback){
   crypto.randomBytes(6, function(ex, buf) {
@@ -133,18 +135,35 @@ module.exports = {
     });
   },
   save: function(req, res, next){
-    Voyage.update({
-      token: req.params.eventid,
-      'users.token': req.params.userid
-    }, {
-      'users.$.name': req.body.name,
-      'users.$.location': req.body.location,
-      'users.$.driving': req.body.driving
-    }, function(err){
+    if(req.body.name.length === 0 || req.body.location.length === 0){
+      res.status(500);
+      return res.send('Please enter a name and location.');
+    }
+    gm.geocode(req.body.location, function(err, result){
+      // console.log(err, result);
       if(err){
         return next(err);
       }
-      res.redirect('/' + req.params.eventid + '/' + req.params.userid);
+      console.log(result);
+      if(result.status == 'ZERO_RESULTS' || result.results.length > 1){
+        res.status(500);
+        return res.send('Location invalid or too vague.');
+        // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
+      }
+      Voyage.update({
+        token: req.params.eventid,
+        'users.token': req.params.userid
+      }, {
+        'users.$.name': req.body.name,
+        'users.$.location': req.body.location,
+        'users.$.driving': req.body.driving
+      }, function(err){
+        if(err){
+          return next(err);
+        }
+        res.send('Changes saved successfully.');
+        // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
+      });
     });
   },
 
