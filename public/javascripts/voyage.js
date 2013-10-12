@@ -6,7 +6,7 @@
   var invitation = function(invite){
     var alert = new Element('div', {
       class: 'alert-box secondary',
-      text: 'New invitation: '
+      text: 'Share this link: '
     });
     var close = new Element('a', {
       class: 'close',
