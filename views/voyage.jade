@@ -3,6 +3,7 @@ extends layout
 block scripts
   script(src='/javascripts/mootools.js')
   script(src='/javascripts/mootools-uri.js')
+  script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
   script(src='/javascripts/voyage.js')
 
 block content
@@ -55,3 +56,11 @@ block content
             button.invite Invite More
       .large-6.columns
         h4 Current Route
+        if locals.directions
+          each direction in locals.directions
+            .directions
+              h6 Directions for #{direction.name}
+              p !{direction.directions}
+        if locals.routing
+          script window.routes = !{locals.routing}
+          #map-canvas

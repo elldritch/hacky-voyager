@@ -25,13 +25,17 @@
     return alert;
   };
 
-  $$('.invite')[0].addEvent('click', function(e){
-    e.preventDefault();
-    new Request({
-      url: uri.get('directory') + uri.get('file') + '/invite',
-      onSuccess: function(res){
-        $$('.invitations').grab(invitation(res));
-      }
-    }).send();
-  });
+  if($$('.invite')[0]){
+    $$('.invite')[0].addEvent('click', function(e){
+      e.preventDefault();
+      new Request({
+        url: uri.get('directory') + uri.get('file') + '/invite',
+        onSuccess: function(res){
+          $$('.invitations').grab(invitation(res));
+        }
+      }).send();
+    });
+  }
+
+  console.log(window.routes);
 })();

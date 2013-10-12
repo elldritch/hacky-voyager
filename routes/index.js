@@ -1,4 +1,6 @@
 var Voyage = require('../models')
+  , router = require('../lib/router')
+
   , crypto = require('crypto');
 
 var get_token = function(callback){
@@ -39,7 +41,7 @@ module.exports = {
     });
   },
   voyage: function(req, res, next){
-    Voyage.find({
+    Voyage.findOne({
       token: req.params.eventid,
       'users.token': req.params.userid
     }, function(err, result){
@@ -49,14 +51,45 @@ module.exports = {
       if(result.length === 0){
         return res.render('voyage-not-found');
       }
-      var voyage = result[0];
+      var voyage = result
+        , drivers = []
+        , moochers = []
+        , end = result.destination;
+      // console.log(end, result, result.destination, result.name);
       voyage.users.forEach(function(user, index, array){
         if(user.token == req.params.userid){
           array.splice(index, 1);
           voyage.current_user = user;
         }
+
+        if(user.name && user.location){
+          if(user.driving){
+            drivers.push(user);
+          }
+          else{
+            moochers.push(user);
+          }
+        }
       });
+
       voyage.uri = req.headers.host;
+
+      if(drivers.length > 0 && moochers.length > 0){
+        return router.get_groups(drivers, moochers, end, function(err, groups){
+          voyage.routing = JSON.stringify(groups);
+
+          var directions = [];
+          groups.forEach(function(group){
+            router.get_directions(group, function(err, direction){
+              directions.push(direction);
+              if(directions.length == groups.length){
+                voyage.directions = directions;
+                res.render('voyage', voyage);
+              }
+            });
+          });
+        });
+      }
       res.render('voyage', voyage);
     });
   },

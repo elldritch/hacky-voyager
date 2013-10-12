@@ -21,6 +21,9 @@ button {
 .voyage form .row {
   text-align: left;
 }
+.voyage .directions {
+  text-align: left;
+}
 footer {
   margin-top: 100px;
 }
