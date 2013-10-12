@@ -41,7 +41,7 @@ module.exports = {
         return next(err);
       }
       console.log(result);
-      if(result.status == 'ZERO_RESULTS' || result.results.length > 1){
+      if(result.status == 'ZERO_RESULTS'){
         req.session.creation_error = 'Event location invalid or too vague.';
         req.session.creation_form = req.body;
         return res.redirect('/new');
@@ -54,7 +54,7 @@ module.exports = {
           return next(err);
         }
         console.log(result);
-        if(result.status == 'ZERO_RESULTS' || result.results.length > 1){
+        if(result.status == 'ZERO_RESULTS'){
           req.session.creation_error = 'Owner location invalid or too vague.';
           req.session.creation_form = req.body;
           return res.redirect('/new');
@@ -187,7 +187,7 @@ module.exports = {
         return next(err);
       }
       console.log(result);
-      if(result.status == 'ZERO_RESULTS' || result.results.length > 1){
+      if(result.status == 'ZERO_RESULTS'){
         res.status(500);
         return res.send('Location invalid or too vague.');
         // res.redirect('/' + req.params.eventid + '/' + req.params.userid);

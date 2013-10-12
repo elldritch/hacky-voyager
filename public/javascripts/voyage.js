@@ -133,6 +133,7 @@
       onSuccess: function(res){
         $$('.save-alerts').set('html', '');
         $$('.save-alerts').grab(save_alert(res, true));
+        location.reload();
       },
       onFailure: function(res){
         $$('.save-alerts').set('html', '');
