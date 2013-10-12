@@ -73,11 +73,11 @@ module.exports = {
 
       voyage.uri = req.headers.host;
 
-      if(drivers.length > 0 && moochers.length > 0){
+      if(drivers.length > 0){
         return router.get_groups(drivers, moochers, end, function(err, groups){
           voyage.routing = JSON.stringify(groups);
 
-          console.log(groups, voyage.routing);
+          // console.log(groups, voyage.routing);
 
           var directions = [];
           groups.forEach(function(group){

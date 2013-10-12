@@ -59,16 +59,36 @@
   groups.forEach(function(group){
     var renderer = new google.maps.DirectionsRenderer();
     renderer.setMap(map);
-    directions.route({
-      origin: group.targets.start.location,
-      destination: group.targets.end,
-      travelMode: google.maps.TravelMode.DRIVING,
-      waypoints: group.waypoints,
-      optimizeWaypoints: true
-    }, function(result, status){
-      if(status == google.maps.DirectionsStatus.OK){
-        renderer.setDirections(result);
-      }
-    });
+    console.log(group, group.targets.waypoints);
+    if(group.targets.waypoints){
+      var waypoints = group.targets.waypoints.map(function(element){
+        return {
+          location: element
+        };
+      });
+      console.log(waypoints);
+      directions.route({
+        origin: group.targets.start.location,
+        destination: group.targets.end,
+        travelMode: google.maps.TravelMode.DRIVING,
+        waypoints: waypoints,
+        optimizeWaypoints: true
+      }, function(result, status){
+        if(status == google.maps.DirectionsStatus.OK){
+          renderer.setDirections(result);
+        }
+      });
+    }
+    else{
+      directions.route({
+        origin: group.targets.start.location,
+        destination: group.targets.end,
+        travelMode: google.maps.TravelMode.DRIVING
+      }, function(result, status){
+        if(status == google.maps.DirectionsStatus.OK){
+          renderer.setDirections(result);
+        }
+      });
+    }
   });
 })();
