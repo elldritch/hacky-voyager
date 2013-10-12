@@ -5,9 +5,23 @@ var Voyage = require('../models')
 
   , gm = require('googlemaps');
 
+// Get a unique token.
 var get_token = function(callback){
   crypto.randomBytes(6, function(ex, buf) {
-    callback(buf.toString('hex'));
+    callback(null, buf.toString('hex'));
+  });
+};
+
+// Validate a location.
+var validate_location = function(location, callback){
+  gm.geocode(location, function(err, result){
+    if(err){
+      return callback(err, null);
+    }
+    if(result.status == 'ZERO_RESULTS'){
+      return callback(null, false);
+    }
+    callback(null, true);
   });
 };
 
@@ -36,32 +50,27 @@ module.exports = {
       return res.redirect('/new');
     }
     gm.geocode(req.body.destination, function(err, result){
-      // console.log(err, result);
       if(err){
         return next(err);
       }
-      console.log(result);
       if(result.status == 'ZERO_RESULTS'){
         req.session.creation_error = 'Event location invalid or too vague.';
         req.session.creation_form = req.body;
         return res.redirect('/new');
-        // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
       }
 
       gm.geocode(req.body['owner-location'], function(err, result){
-        // console.log(err, result);
         if(err){
           return next(err);
         }
-        console.log(result);
+        // console.log(result);
         if(result.status == 'ZERO_RESULTS'){
           req.session.creation_error = 'Owner location invalid or too vague.';
           req.session.creation_form = req.body;
           return res.redirect('/new');
-          // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
         }
-        get_token(function(event_token){
-          get_token(function(owner_token){
+        get_token(function(err, event_token){
+          get_token(function(err, owner_token){
             var voyage = new Voyage({
               name: req.body.name,
               destination: req.body.destination,
@@ -99,7 +108,6 @@ module.exports = {
         , drivers = []
         , moochers = []
         , end = result.destination;
-      // console.log(end, result, result.destination, result.name);
       voyage.users.forEach(function(user, index, array){
         if(user.token == req.params.userid){
           voyage.current_user = user;
@@ -121,9 +129,8 @@ module.exports = {
         return router.get_groups(drivers, moochers, end, function(err, groups){
           voyage.routing = JSON.stringify(groups);
 
-          // console.log(groups, voyage.routing);
-
           var directions = [];
+          // console.log('g', groups);
           groups.forEach(function(group){
             router.get_directions(group, function(err, direction){
               directions.push(direction);
@@ -158,7 +165,7 @@ module.exports = {
         return next('No invite permissions.');
       }
 
-      get_token(function(new_user_token){
+      get_token(function(err, new_user_token){
         Voyage.update({
           token: req.params.eventid
         }, {
@@ -182,15 +189,13 @@ module.exports = {
       return res.send('Please enter a name and location.');
     }
     gm.geocode(req.body.location, function(err, result){
-      // console.log(err, result);
       if(err){
         return next(err);
       }
-      console.log(result);
+      // console.log(result);
       if(result.status == 'ZERO_RESULTS'){
         res.status(500);
         return res.send('Location invalid or too vague.');
-        // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
       }
       Voyage.update({
         token: req.params.eventid,
@@ -200,11 +205,11 @@ module.exports = {
         'users.$.location': req.body.location,
         'users.$.driving': req.body.driving
       }, function(err){
+        console.log(req.body.driving);
         if(err){
           return next(err);
         }
         res.send('Changes saved successfully.');
-        // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
       });
     });
   },

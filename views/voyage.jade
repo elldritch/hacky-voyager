@@ -33,7 +33,10 @@ block content
             input(type='text', name='location', placeholder='Your Location', autocomplete="off")
           .row
             .small-1.small-offset-4.columns
-              input(type='checkbox', name='driving', checked=locals.current_user.driving, autocomplete="off") 
+              if locals.current_user.driving
+                input(type='checkbox', name='driving', autocomplete="off", checked)
+              else
+                input(type='checkbox', name='driving', autocomplete="off") 
             .small-7.columns
               label(for='driving') Driving?
           button.save Save

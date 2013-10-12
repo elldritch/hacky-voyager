@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/facebook-carpool');
 
+// Event schema.
 var event_schema = new mongoose.Schema({
   name: String,
   destination: String,
