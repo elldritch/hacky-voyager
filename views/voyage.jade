@@ -1,0 +1,55 @@
+extends layout
+
+block scripts
+  script(src='/javascripts/mootools.js')
+  script(src='/javascripts/mootools-uri.js')
+  script(src='/javascripts/voyage.js')
+
+block content
+  section.voyage
+    .row
+      .large-12.large-centered.columns
+        h2 Voyage To #{locals.name}
+        h4.subheader #{locals.destination}
+    .row
+      .large-6.columns
+        h4 You
+        form(method='post', action='/#{locals.token}/#{locals.current_user.token}/save')
+          if locals.current_user.name
+            input(type='text', name='name', value='#{locals.current_user.name}', placeholder='Your Name', autocomplete="off")
+          else
+            input(type='text', name='name', placeholder='Your Name', autocomplete="off")
+          if locals.current_user.location
+            input(type='text', name='location', value='#{locals.current_user.location}', placeholder='Your Location', autocomplete="off")
+          else
+            input(type='text', name='location', placeholder='Your Location', autocomplete="off")
+          .row
+            .small-1.small-offset-4.columns
+              input(type='checkbox', name='driving', checked=locals.current_user.driving, autocomplete="off") 
+            .small-7.columns
+              label Driving?
+          button.submit Save
+        h4 Who else is coming?
+        table
+          thead
+            tr
+              th Name
+              th Location
+              th Driving?
+          tbody
+            each user in locals.users
+              if user.name
+                tr
+                  td #{user.name}
+                  td #{user.location}
+                  if user.driving
+                    td Yes
+                  else
+                    td No
+
+        .row.invitations
+        if locals.current_user.owner
+          form(method='post', action='/#{locals.token}/#{locals.current_user.token}/invite')
+            button.invite Invite More
+      .large-6.columns
+        h4 Current Route

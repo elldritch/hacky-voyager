@@ -1,18 +1,20 @@
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/facebook-carpool');
 
-var user_schema = new mongoose.Schema({
-  fbid: String,
-  location: String,
-  events: [{
-    fbid: String,
+var event_schema = new mongoose.Schema({
+  name: String,
+  destination: String,
+  token: String,
+  users: [{
+    token: String,
+    owner: {
+      type: Boolean,
+      default: false
+    },
+    name: String,
     location: String,
-    drive: Boolean
+    driving: Boolean
   }]
 });
 
-var User = mongoose.model('User', user_schema);
-
-module.exports = {
-  user: User
-};
+module.exports = mongoose.model('Event', event_schema);
