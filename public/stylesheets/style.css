@@ -6,7 +6,8 @@ html {
 }
 .splash,
 .new,
-.error {
+.error,
+.about {
   margin-top: 100px;
 }
 button {
@@ -42,8 +43,4 @@ button {
 }
 footer {
   margin-top: 100px;
-}
-footer .inline-list {
-  max-width: 220px;
-  margin: 0 auto;
 }

@@ -29,6 +29,9 @@ module.exports = {
   index: function(req, res){
     res.render('index');
   },
+  about: function(req, res){
+    res.render('about');
+  },
   new_voyage: function(req, res){
     var message = req.session.creation_error
       , form = req.session.creation_form;
