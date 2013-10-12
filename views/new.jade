@@ -8,9 +8,9 @@ block content
         form(method='POST', action='/create')
           if locals.message
             .small-12.columns
-              input(type='text', name='name', placeholder='Voyage Name', autocomplete="off", value='#{locals.form.name}')
+              input(type='text', name='name', placeholder='Destination Name', autocomplete="off", value='#{locals.form.name}')
             .small-12.columns
-              input(type='text', name='destination', placeholder='Voyage Destination', autocomplete="off", value='#{locals.form.destination}')
+              input(type='text', name='destination', placeholder='Destination Location', autocomplete="off", value='#{locals.form.destination}')
             hr
             .small-12.columns
               input(type='text', name='owner-name', placeholder='Your Name', autocomplete="off", value='#{locals.form["owner-name"]}')
