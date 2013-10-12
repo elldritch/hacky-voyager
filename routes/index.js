@@ -98,10 +98,10 @@ module.exports = {
       token: req.params.eventid,
       'users.token': req.params.userid
     }, function(err, result){
-      if(err || result.length > 1){
+      if(err){
         return next(err);
       }
-      if(result.length === 0){
+      if(result === null){
         return res.render('voyage-not-found');
       }
       var voyage = result
