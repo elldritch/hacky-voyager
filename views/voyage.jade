@@ -9,6 +9,10 @@ block scripts
 
 block content
   section.voyage
+    .row.another
+      .large-12.columns
+        p
+          a(href='/new') Start another voyage?
     .row
       .large-12.large-centered.columns
         h2 Voyage To #{locals.name}
@@ -68,3 +72,4 @@ block content
               h6.directions-header Directions for #{direction.name}
               .directions-list
                 !{direction.directions}
+    

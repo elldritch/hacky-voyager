@@ -12,6 +12,9 @@ html {
 button {
   padding: 10px 20px;
 }
+.voyage .another {
+  text-align: left;
+}
 .voyage table {
   width: 100%;
 }

@@ -16,28 +16,70 @@ module.exports = {
     res.render('index');
   },
   new_voyage: function(req, res){
-    res.render('new');
+    var message = req.session.creation_error
+      , form = req.session.creation_form;
+    if(message){
+      delete req.session.creation_error;
+      delete req.session.creation_form;
+    }
+    res.render('new', {
+      message: message,
+      form: form
+    });
   },
 
   create_voyage: function(req, res, next){
-    get_token(function(event_token){
-      get_token(function(owner_token){
-        var voyage = new Voyage({
-          name: req.body.name,
-          destination: req.body.destination,
-          token: event_token,
-          users: [{
-            token: owner_token,
-            name: req.body['owner-name'],
-            owner: true,
-            location: req.body['owner-location']
-          }]
-        });
-        voyage.save(function(err){
-          if(err){
-            return next(err);
-          }
-          res.redirect('/' + event_token + '/' + owner_token);
+    if(req.body.name.length === 0 || req.body['owner-name'] === 0 ||
+      req.body.destination.length === 0 || req.body['owner-location'] === 0){
+      req.session.creation_error = 'All fields must be completed.';
+      req.session.creation_form = req.body;
+      return res.redirect('/new');
+    }
+    gm.geocode(req.body.destination, function(err, result){
+      // console.log(err, result);
+      if(err){
+        return next(err);
+      }
+      console.log(result);
+      if(result.status == 'ZERO_RESULTS' || result.results.length > 1){
+        req.session.creation_error = 'Event location invalid or too vague.';
+        req.session.creation_form = req.body;
+        return res.redirect('/new');
+        // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
+      }
+
+      gm.geocode(req.body['owner-location'], function(err, result){
+        // console.log(err, result);
+        if(err){
+          return next(err);
+        }
+        console.log(result);
+        if(result.status == 'ZERO_RESULTS' || result.results.length > 1){
+          req.session.creation_error = 'Owner location invalid or too vague.';
+          req.session.creation_form = req.body;
+          return res.redirect('/new');
+          // res.redirect('/' + req.params.eventid + '/' + req.params.userid);
+        }
+        get_token(function(event_token){
+          get_token(function(owner_token){
+            var voyage = new Voyage({
+              name: req.body.name,
+              destination: req.body.destination,
+              token: event_token,
+              users: [{
+                token: owner_token,
+                name: req.body['owner-name'],
+                owner: true,
+                location: req.body['owner-location']
+              }]
+            });
+            voyage.save(function(err){
+              if(err){
+                return next(err);
+              }
+              res.redirect('/' + event_token + '/' + owner_token);
+            });
+          });
         });
       });
     });
