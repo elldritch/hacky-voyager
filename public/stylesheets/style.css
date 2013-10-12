@@ -21,6 +21,13 @@ button {
 .voyage form .row {
   text-align: left;
 }
+.voyage form label[for='driving'] {
+  margin-top: 2px;
+}
+.voyage #map-canvas {
+  width: 100%;
+  height: 300px;
+}
 .voyage .directions {
   text-align: left;
 }

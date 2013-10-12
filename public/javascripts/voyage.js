@@ -37,5 +37,38 @@
     });
   }
 
-  console.log(window.routes);
+  var groups = window.routes;
+  console.log(groups);
+
+  var map = new google.maps.Map($('map-canvas'), {
+    center: new google.maps.LatLng(0, 0),
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    zoom: 8
+  });
+
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode({
+    address: groups[0].targets.end
+  }, function(results, status){
+    if(status == google.maps.GeocoderStatus.OK){
+      map.setCenter(results[0].geometry.location);
+    }
+  });
+
+  var directions = new google.maps.DirectionsService();
+  groups.forEach(function(group){
+    var renderer = new google.maps.DirectionsRenderer();
+    renderer.setMap(map);
+    directions.route({
+      origin: group.targets.start.location,
+      destination: group.targets.end,
+      travelMode: google.maps.TravelMode.DRIVING,
+      waypoints: group.waypoints,
+      optimizeWaypoints: true
+    }, function(result, status){
+      if(status == google.maps.DirectionsStatus.OK){
+        renderer.setDirections(result);
+      }
+    });
+  });
 })();

@@ -30,7 +30,7 @@ block content
             .small-1.small-offset-4.columns
               input(type='checkbox', name='driving', checked=locals.current_user.driving, autocomplete="off") 
             .small-7.columns
-              label Driving?
+              label(for='driving') Driving?
           button.submit Save
         h4 Who else is coming?
         table
@@ -56,11 +56,12 @@ block content
             button.invite Invite More
       .large-6.columns
         h4 Current Route
-        if locals.directions
-          each direction in locals.directions
-            .directions
-              h6 Directions for #{direction.name}
-              p !{direction.directions}
         if locals.routing
           script window.routes = !{locals.routing}
           #map-canvas
+        if locals.directions
+          each direction in locals.directions
+            hr
+            .directions
+              h6 Directions for #{direction.name}
+              p !{direction.directions}
