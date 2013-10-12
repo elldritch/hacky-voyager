@@ -63,7 +63,7 @@
     if(group.targets.waypoints){
       var waypoints = group.targets.waypoints.map(function(element){
         return {
-          location: element
+          location: element.name
         };
       });
       console.log(waypoints);
@@ -90,5 +90,13 @@
         }
       });
     }
+  });
+
+  // $$('.directions-header').each(function(element){
+  //   new Fx.Accordion([element], element.getSiblings('.directions-list'));
+  // });
+  new Fx.Accordion($$('.directions')[0], '.directions-header', '.directions-list', {
+    display: -1,
+    alwaysHide: true
   });
 })();

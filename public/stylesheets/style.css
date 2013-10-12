@@ -31,6 +31,9 @@ button {
 .voyage .directions {
   text-align: left;
 }
+.voyage .directions .directions-header {
+  cursor: pointer;
+}
 footer {
   margin-top: 100px;
 }

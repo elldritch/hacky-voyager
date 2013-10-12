@@ -2,7 +2,8 @@ extends layout
 
 block scripts
   script(src='/javascripts/mootools.js')
-  script(src='/javascripts/mootools-uri.js')
+  // script(src='/javascripts/mootools-uri.js')
+  script(src='/javascripts/mootools-more.js')
   script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
   script(src='/javascripts/voyage.js')
 
@@ -60,8 +61,9 @@ block content
           script window.routes = !{locals.routing}
           #map-canvas
         if locals.directions
-          each direction in locals.directions
-            hr
-            .directions
-              h6 Directions for #{direction.name}
-              p !{direction.directions}
+          .directions
+            each direction in locals.directions
+              hr
+              h6.directions-header Directions for #{direction.name}
+              .directions-list
+                !{direction.directions}
