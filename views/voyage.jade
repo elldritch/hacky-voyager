@@ -15,8 +15,9 @@ block content
           a(href='/new') Start another voyage?
     .row
       .large-12.large-centered.columns
-        h2 Voyage To #{locals.name}
-        h4.subheader #{locals.destination}
+        //- h2 Voyage To #{locals.name}
+        //- h4.subheader #{locals.destination}
+        h2 Voyage to #{locals.destination}
         .alert-box.secondary Bookmark this voyage @  
           a(href='/#{locals.token}/#{locals.current_user.token}') http://#{locals.uri}/#{locals.token}/#{locals.current_user.token}
     .row

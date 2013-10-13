@@ -46,7 +46,9 @@ module.exports = {
   },
 
   create_voyage: function(req, res, next){
-    if(req.body.name.length === 0 || req.body['owner-name'] === 0 ||
+    // if(req.body.name.length === 0 || req.body['owner-name'] === 0 ||
+    //   req.body.destination.length === 0 || req.body['owner-location'] === 0){
+    if(req.body['owner-name'] === 0 ||
       req.body.destination.length === 0 || req.body['owner-location'] === 0){
       req.session.creation_error = 'All fields must be completed.';
       req.session.creation_form = req.body;

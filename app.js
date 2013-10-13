@@ -18,6 +18,7 @@ app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 app.use(function(err, req, res, next){
+  console.error(err);
   res.render('error', {
     code: 500
   });

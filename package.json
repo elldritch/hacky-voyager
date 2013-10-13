@@ -1,9 +1,9 @@
 {
-  "name": "facebook-carpool",
-  "version": "0.0.1",
+  "name": "voyager",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon -e js app.js"
   },
   "dependencies": {
     "express": "*",
@@ -15,5 +15,8 @@
     "googlemaps": "*",
     "request": "*",
     "moment": "*"
+  },
+  "devDependencies": {
+    "nodemon"
   }
 }
