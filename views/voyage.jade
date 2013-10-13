@@ -69,6 +69,8 @@ block content
         if locals.routing
           script window.routes = !{locals.routing}
           #map-canvas
+        else
+          p There must be at least 1 driver to create routes.
         if locals.directions
           .directions
             each direction in locals.directions
