@@ -32,13 +32,13 @@ block content
           else
             input(type='text', name='location', placeholder='Your Location', autocomplete="off")
           .row
-            .small-1.small-offset-4.columns
+            .small-1.columns
               if locals.current_user.driving
                 input(type='checkbox', name='driving', autocomplete="off", checked)
               else
                 input(type='checkbox', name='driving', autocomplete="off") 
-            .small-7.columns
-              label(for='driving') Driving?
+            .small-11.columns
+              label(for='driving') Can you pick people up?
           button.save Save Changes
           .row.save-alerts
         h4 Who else is coming?
@@ -79,7 +79,7 @@ block content
     .row
       .large-12.small-centered.columns
         p
-          | With &hearts; from 
+          | &copy; 2013 
           a(href='//lehaozhang.com') Leo Zhang
           br
           a(href='/') Home
