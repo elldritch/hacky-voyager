@@ -40,7 +40,7 @@ block content
                 input(type='checkbox', name='driving', autocomplete="off") 
             .small-11.columns
               label(for='driving') Can you pick people up?
-          button.save Save Changes
+          button(type='button').save Save Changes
           .row.save-alerts
         h4 Who else is coming?
         table
@@ -63,7 +63,7 @@ block content
         .row.invitations
         if locals.current_user.owner
           form(method='post', action='/#{locals.token}/#{locals.current_user.token}/invite')
-            button.invite Invite More
+            button(type='button').invite Invite More
       .large-6.columns
         h4 Current Route
         if locals.routing
