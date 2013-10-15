@@ -1,49 +1,16 @@
 @import 'normalize.css';
 @import 'foundation.min.css';
-html {
-  text-align: center;
-  padding: 20px 0 60px;
-}
-.splash,
-.new,
-.error,
-.about {
-  margin-top: 100px;
-}
-button {
-  padding: 10px 20px;
-}
-.voyage .another {
-  text-align: left;
-}
-.voyage table {
-  width: 100%;
-}
-.voyage table th {
-  text-align: center;
-}
-.voyage form .row {
-  text-align: left;
-}
-.voyage form label[for='driving'] {
-  margin-top: 2px;
-}
-.voyage #map-canvas {
-  width: 100%;
-  height: 300px;
-}
-.voyage .directions {
-  text-align: left;
-}
-.voyage .directions .directions-header {
-  cursor: pointer;
-}
-.voyage .directions ol {
-  margin-left: 30px;
-}
-.about ul {
-  text-align: left;
-}
-footer {
-  margin-top: 100px;
-}
+html{text-align:center;padding:20px 0 60px}
+.splash,.new,.error,.about{margin-top:100px}
+button{padding:10px 20px}
+.voyage .another{text-align:left}
+.voyage table{width:100%;}
+.voyage table th{text-align:center}
+.voyage form .row{text-align:left}
+.voyage form label[for='driving']{margin-top:2px}
+.voyage #map-canvas{width:100%;height:300px}
+.voyage .directions{text-align:left;}
+.voyage .directions .directions-header{cursor:pointer}
+.voyage .directions ol{margin-left:30px}
+.about ul{text-align:left}
+footer{margin-top:100px}

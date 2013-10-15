@@ -7,8 +7,6 @@ block content
         h2 Go on a Voyage
         form(method='POST', action='/create')
           if locals.message
-            //- .small-12.columns
-            //-   input(type='text', name='name', placeholder='Destination Name', autocomplete="off", value='#{locals.form.name}')
             .small-12.columns
               input(type='text', name='destination', placeholder='Destination Location', autocomplete="off", value='#{locals.form.destination}')
             hr
@@ -17,8 +15,6 @@ block content
             .small-12.columns
               input(type='text', name='owner-location', placeholder='Your Location', autocomplete="off", value='#{locals.form["owner-location"]}')
           else
-            //- .small-12.columns
-            //-   input(type='text', name='name', placeholder='Destination Name', autocomplete="off")
             .small-12.columns
               input(type='text', name='destination', placeholder='Destination Location', autocomplete="off")
             hr

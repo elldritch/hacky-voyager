@@ -1,6 +1,6 @@
 {
   "name": "voyager",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "nodemon -e js app.js"
@@ -9,6 +9,8 @@
     "express": "*",
     "jade": "*",
     "stylus": "*",
+    "foundation": "*",
+    "nib": "*",
 
     "mongoose": "*",
 
@@ -17,6 +19,7 @@
     "moment": "*"
   },
   "devDependencies": {
-    "nodemon": "*"
+    "nodemon": "*",
+    "forever": "*"
   }
 }
